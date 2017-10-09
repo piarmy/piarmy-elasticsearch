@@ -1,0 +1,60 @@
+# Sample data: https://www.elastic.co/guide/en/kibana/current/tutorial-load-dataset.html
+
+# Create mapping templates
+curl -XPUT 'elasticsearch:9200/logstash-2015.05.18' -H 'Content-Type: application/json' -d'
+{
+  "mappings": {
+    "log": {
+      "properties": {
+        "geo": {
+          "properties": {
+            "coordinates": {
+              "type": "geo_point"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'
+
+curl -XPUT 'elasticsearch:9200/logstash-2015.05.19' -H 'Content-Type: application/json' -d'
+{
+  "mappings": {
+    "log": {
+      "properties": {
+        "geo": {
+          "properties": {
+            "coordinates": {
+              "type": "geo_point"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'
+
+curl -XPUT 'elasticsearch:9200/logstash-2015.05.20' -H 'Content-Type: application/json' -d'
+{
+  "mappings": {
+    "log": {
+      "properties": {
+        "geo": {
+          "properties": {
+            "coordinates": {
+              "type": "geo_point"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'
+
+# Import data
+
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'elasticsearch:9200/_bulk?pretty' --data-binary @logs.jsonl

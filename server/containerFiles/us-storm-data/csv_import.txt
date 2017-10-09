@@ -1,0 +1,107 @@
+Data from: https://www.ncdc.noaa.gov/stormevents/ftp.jsp
+Total records: 36422
+Valid records: 36335
+
+Columns
+EVENT_ID,DATE,TIME,STATE,EVENT_TYPE,CITY,INJURIES_DIRECT,DEATHS_DIRECT,DAMAGE_PROPERTY,DAMAGE_CROPS,SOURCE,MAGNITUDE,BEGIN_LAT,BEGIN_LON,END_LAT,END_LON
+
+"%{DATE_US:date},%{TIME:time},%{DATA:borough},%{DATA:zip_code},%{NUMBER:location.lat},%{NUMBER:location.lon},%{DATA:street_name},%{DATA:cross_street_name},%{NUMBER:persons_injured},%{NUMBER:persons_killed},%{NUMBER:pedestrians_injured},%{NUMBER:pedestrians_killed},%{NUMBER:cyclists_injured},%{NUMBER:cyclists_killed},%{NUMBER:motorists_injured},%{NUMBER:motorists_killed},%{DATA:vehicle_1_factor},%{DATA:vehicle_2_factor},%{DATA:vehicle_3_factor},%{DATA},%{DATA:vehicle_1},%{DATA:vehicle_2},%{DATA:vehicle_3}"
+
+
+
+# Simulate
+curl -XPOST 'elasticsearch:9200/_ingest/pipeline/_simulate?pretty' -H 'Content-Type: application/json' -d'
+{
+ "pipeline": {
+   "description": "Parsing Storm Data",
+   "processors": [
+     {
+       "grok": {
+         "field": "storm",
+         "patterns": [
+           "%{DATA:id},%{DATE_US:date},%{TIME:time},%{DATA:state},%{DATA:city},%{DATA:event_type},%{NUMBER:injuries},%{NUMBER:deaths},%{NUMBER:damage_property},%{NUMBER:damage_crops},%{DATA:source},(%{NUMBER:magnitude})?,(%{NUMBER:begin_location.lat})?,(%{NUMBER:begin_location.lon})?,(%{NUMBER:end_location.lat})?,(%{NUMBER:end_location.lon})?"
+         ]
+       }
+     },
+     {
+       "remove": {
+         "field": "storm"
+       }
+     }
+   ]
+ },
+ "docs": [
+   {
+     "_index": "storms",
+     "_type": "storm",
+     "_id": "AVvJZVQEBr2flFKzrrkr",
+     "_score": 1,
+     "_source": {
+       "storm": "615320,01-01-2016,00:00:00,Arkansas,Crawford,Flood,0,0,0,0,Official NWS Observations,,35.49,-94.43,35.5,-94.41"
+     }
+   }
+ ]
+}
+'
+
+# Create mapping template
+curl -XPUT 'elasticsearch:9200/_template/us_storm_data_template?pretty' -H 'Content-Type: application/json' -d'
+{
+ "template": "storm_data_*",
+ "mappings": {
+   "storm": {
+     "properties": {
+      "date": {
+         "type": "date",
+         "format": "MM-dd-yyyy"
+       },
+       "begin_location": {
+         "type": "geo_point"
+       },
+       "injuries": {
+         "type": "integer"
+       },
+       "deaths": {
+         "type": "integer"
+       },
+       "damage_property": {
+         "type": "integer"
+       },
+       "damage_crops": {
+         "type": "integer"
+       },
+       "magnitude": {
+         "type": "float"
+       }
+     }
+   }
+ }
+}
+'
+
+# Pipeline
+curl -XPUT 'elasticsearch:9200/_ingest/pipeline/us_storm_data_template?pretty' -H 'Content-Type: application/json' -d'
+{
+ "description": "Parsing Storm Data",
+ "processors": [
+   {
+     "grok": {
+        "field": "storm",
+        "patterns": [
+          "%{DATA:id},%{DATE_US:date},%{TIME:time},%{DATA:state},%{DATA:city},%{DATA:event_type},(%{NUMBER:injuries})?,(%{NUMBER:deaths})?,(%{NUMBER:damage_property})?,(%{NUMBER:damage_crops})?,%{DATA:source},(%{NUMBER:magnitude})?,(%{NUMBER:begin_location.lat})?,(%{NUMBER:begin_location.lon})?,(%{NUMBER:end_location.lat})?,(%{NUMBER:end_location.lon})?"
+        ]
+     }
+   },
+   {
+      "remove": {
+        "field": "storm"
+      }
+    }
+  ]
+}
+'
+
+
+# import.sh
+
+`. import.sh`

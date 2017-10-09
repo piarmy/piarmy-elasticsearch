@@ -1,0 +1,84 @@
+# REF: https://www.elastic.co/blog/indexing-csv-elasticsearch-ingest-node
+# REF: https://github.com/elastic/logstash/blob/v1.4.2/patterns/grok-patterns
+
+# Simulate
+curl -XPOST 'elasticsearch:9200/_ingest/pipeline/_simulate?pretty' -H 'Content-Type: application/json' -d'
+{
+ "pipeline": {
+   "description": "Parsing Collisions",
+   "processors": [
+     {
+       "grok": {
+         "field": "collision",
+         "patterns": [
+           "%{DATE_US:date},%{TIME:time},%{DATA:borough},%{DATA:zip_code},%{NUMBER:location.lat},%{NUMBER:location.lon},%{DATA:street_name},%{DATA:cross_street_name},%{NUMBER:persons_injured},%{NUMBER:persons_killed},%{NUMBER:pedestrians_injured},%{NUMBER:pedestrians_killed},%{NUMBER:cyclists_injured},%{NUMBER:cyclists_killed},%{NUMBER:motorists_injured},%{NUMBER:motorists_killed},%{DATA:vehicle_1_factor},%{DATA:vehicle_2_factor},%{DATA:vehicle_3_factor},%{DATA},%{DATA:vehicle_1},%{DATA:vehicle_2},%{DATA:vehicle_3}"
+         ]
+       }
+     },
+     {
+       "remove": {
+         "field": "collision"
+       }
+     }
+   ]
+ },
+ "docs": [
+   {
+     "_index": "collisions",
+     "_type": "collision",
+     "_id": "AVvJZVQEBr2flFKzrrkr",
+     "_score": 1,
+     "_source": {
+       "collision": "1/1/17,0:20:00,BRONX,10453,40.8496686,-73.9080129,WOODBINE STREET,SAINT NICHOLAS,1,2,3,4,5,6,7,8,Unspecified v1,Unspecified v2,Unspecified v3,3590430,PASSENGER,TRUCK,TAXI"
+     }
+   }
+ ]
+}
+'
+
+# Create mapping template
+curl -XPUT 'elasticsearch:9200/_template/nyc_collisions_template?pretty' -H 'Content-Type: application/json' -d'
+{
+ "template": "collision_info_*",
+ "mappings": {
+   "collision": {
+     "properties": {
+       "location": {
+         "type": "geo_point"
+       },
+       "date": {
+         "type": "date",
+         "format": "MM-dd-yyyy"
+       }
+     }
+   }
+ }
+}
+'
+
+# Pipeline
+curl -XPUT 'elasticsearch:9200/_ingest/pipeline/nyc_collisions_template?pretty' -H 'Content-Type: application/json' -d'
+{
+ "description": "Parsing the NYC collisions",
+ "processors": [
+   {
+     "grok": {
+       "field": "collision",
+       "patterns": [
+         "%{DATE_US:date},%{TIME:time},%{DATA:borough},%{DATA:zip_code},%{NUMBER:location.lat},%{NUMBER:location.lon},%{DATA:street_name},%{DATA:cross_street_name},%{NUMBER:persons_injured},%{NUMBER:persons_killed},%{NUMBER:pedestrians_injured},%{NUMBER:pedestrians_killed},%{NUMBER:cyclists_injured},%{NUMBER:cyclists_killed},%{NUMBER:motorists_injured},%{NUMBER:motorists_killed},%{DATA:vehicle_1_factor},%{DATA:vehicle_2_factor},%{DATA:vehicle_3_factor},%{DATA},%{DATA:vehicle_1},%{DATA:vehicle_2},%{DATA:vehicle_3}"
+       ]
+     }
+   },
+   {
+     "remove": {
+       "field": "collision"
+     }
+   }
+ ]
+}
+'
+
+
+# import.sh
+
+`. import.sh`

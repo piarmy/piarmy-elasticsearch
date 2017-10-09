@@ -1,0 +1,131 @@
+[
+  {
+    "_id": "504304c0-925e-11e7-9b44-3fc74c11144d",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Overview",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"90a9c0a0-925c-11e7-9b44-3fc74c11144d\",\"panelIndex\":1,\"row\":4,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"69b0a400-925c-11e7-9b44-3fc74c11144d\",\"panelIndex\":2,\"row\":1,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"ed9040f0-925c-11e7-9b44-3fc74c11144d\",\"panelIndex\":3,\"row\":10,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"a40ad7b0-925c-11e7-9b44-3fc74c11144d\",\"panelIndex\":4,\"row\":7,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"19331910-9269-11e7-bdf2-4dbe17d732b3\",\"panelIndex\":5,\"row\":1,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"2d41bbf0-926e-11e7-a297-c3de24b31933\",\"panelIndex\":6,\"row\":4,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"size_x\":6,\"size_y\":3,\"panelIndex\":7,\"type\":\"visualization\",\"id\":\"b3cc0680-926e-11e7-a297-c3de24b31933\",\"col\":7,\"row\":7},{\"size_x\":6,\"size_y\":3,\"panelIndex\":8,\"type\":\"visualization\",\"id\":\"db94a820-926e-11e7-a297-c3de24b31933\",\"col\":7,\"row\":10}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-5\":{\"vis\":{\"defaultColors\":{\"0 - 50\":\"rgb(0,104,55)\",\"50 - 75\":\"rgb(255,255,190)\",\"75 - 100\":\"rgb(165,0,38)\"}}},\"P-6\":{\"vis\":{\"defaultColors\":{\"56 - 83\":\"rgb(0,104,55)\",\"83 - 89\":\"rgb(255,255,190)\",\"89 - 100\":\"rgb(165,0,38)\"}}},\"P-7\":{\"vis\":{\"defaultColors\":{\"0 - 50\":\"rgb(0,104,55)\",\"50 - 70\":\"rgb(255,255,190)\",\"70 - 100\":\"rgb(165,0,38)\"}}},\"P-8\":{\"vis\":{\"defaultColors\":{\"0 - 50\":\"rgb(0,104,55)\",\"50 - 67\":\"rgb(255,255,190)\",\"67 - 100\":\"rgb(165,0,38)\"}}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"match_all\":{}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "90a9c0a0-925c-11e7-9b44-3fc74c11144d",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: CPU Temperature",
+      "visState": "{\"title\":\"PiArmy Nodes: CPU Temperature\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"Date per 10 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\",\"setYExtents\":true,\"max\":180,\"min\":100},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average Temp\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average Temp\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"cardinal\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"Temp\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Date\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"piarmy01\":\"#508642\",\"piarmy02\":\"#CCA300\",\"piarmy03\":\"#447EBC\",\"piarmy04\":\"#0A437C\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "ed9040f0-925c-11e7-9b44-3fc74c11144d",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: HDD (Used)",
+      "visState": "{\"title\":\"PiArmy Nodes: HDD (Used)\",\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Date per 10 seconds\"},\"type\":\"category\"}],\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Average HDD.used\"},\"drawLinesBetweenPoints\":true,\"interpolate\":\"cardinal\",\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"max\":30,\"min\":0,\"mode\":\"normal\",\"setYExtents\":true,\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Average HDD.used\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"HDD.used\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Date\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"piarmy01\":\"#508642\",\"piarmy02\":\"#CCA300\",\"piarmy03\":\"#447EBC\",\"piarmy04\":\"#0A437C\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "a40ad7b0-925c-11e7-9b44-3fc74c11144d",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: RAM (Used)",
+      "visState": "{\"title\":\"PiArmy Nodes: RAM (Used)\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"Date per 10 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\",\"setYExtents\":true,\"max\":950,\"min\":0},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average RAM.used\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average RAM.used\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"cardinal\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"RAM.used\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Date\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"piarmy01\":\"#508642\",\"piarmy02\":\"#CCA300\",\"piarmy03\":\"#447EBC\",\"piarmy04\":\"#0A437C\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "69b0a400-925c-11e7-9b44-3fc74c11144d",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: CPU Usage",
+      "visState": "{\"title\":\"PiArmy Nodes: CPU Usage\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"Date per 10 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\",\"setYExtents\":true,\"max\":100,\"min\":0},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average CPU\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average CPU\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"cardinal\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"CPU\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Date\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"piarmy01\":\"#508642\",\"piarmy02\":\"#CCA300\",\"piarmy03\":\"#447EBC\",\"piarmy04\":\"#0A437C\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "db94a820-926e-11e7-a297-c3de24b31933",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: HDD Gauges",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"field\":\"HDD.used\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"field\":\"Name.keyword\",\"include\":\"\",\"order\":\"asc\",\"orderBy\":\"_term\",\"size\":5},\"schema\":\"group\",\"type\":\"terms\"}],\"listeners\":{},\"params\":{\"addLegend\":true,\"addTooltip\":true,\"gauge\":{\"backStyle\":\"Full\",\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":15},{\"from\":15,\"to\":20},{\"from\":20,\"to\":30}],\"extendRange\":true,\"gaugeColorMode\":\"Labels\",\"gaugeStyle\":\"Full\",\"gaugeType\":\"Arc\",\"invertColors\":false,\"labels\":{\"color\":\"black\",\"show\":true},\"orientation\":\"vertical\",\"percentageMode\":true,\"scale\":{\"color\":\"#333\",\"labels\":false,\"show\":false},\"style\":{\"bgColor\":false,\"bgFill\":\"#eee\",\"bgMask\":false,\"bgWidth\":0.9,\"fontSize\":60,\"labelColor\":true,\"mask\":false,\"maskBars\":50,\"subText\":\"\",\"width\":0.9},\"type\":\"meter\",\"verticalSplit\":false}},\"title\":\"PiArmy Nodes: HDD Gauges\",\"type\":\"gauge\"}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 50\":\"rgb(0,104,55)\",\"50 - 67\":\"rgb(255,255,190)\",\"67 - 100\":\"rgb(165,0,38)\"},\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "2d41bbf0-926e-11e7-a297-c3de24b31933",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: CPU Temperature Gauges",
+      "visState": "{\"title\":\"PiArmy Nodes: CPU Temperature Gauges\",\"type\":\"gauge\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":true,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":100,\"to\":150},{\"from\":150,\"to\":160},{\"from\":160,\"to\":180}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":false,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":false}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"Temp\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"include\":\"\",\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"56 - 83\":\"rgb(0,104,55)\",\"83 - 89\":\"rgb(255,255,190)\",\"89 - 100\":\"rgb(165,0,38)\"},\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "b3cc0680-926e-11e7-a297-c3de24b31933",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: RAM Gauges",
+      "visState": "{\"title\":\"PiArmy Nodes: RAM Gauges\",\"type\":\"gauge\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"gauge\":{\"backStyle\":\"Full\",\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":500},{\"from\":500,\"to\":700},{\"from\":700,\"to\":1000}],\"extendRange\":true,\"gaugeColorMode\":\"Labels\",\"gaugeStyle\":\"Full\",\"gaugeType\":\"Arc\",\"invertColors\":false,\"labels\":{\"color\":\"black\",\"show\":true},\"orientation\":\"vertical\",\"percentageMode\":true,\"scale\":{\"color\":\"#333\",\"labels\":false,\"show\":false},\"style\":{\"bgColor\":false,\"bgFill\":\"#eee\",\"bgMask\":false,\"bgWidth\":0.9,\"fontSize\":60,\"labelColor\":true,\"mask\":false,\"maskBars\":50,\"subText\":\"\",\"width\":0.9},\"type\":\"meter\",\"verticalSplit\":false}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"RAM.used\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"include\":\"\",\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 50\":\"rgb(0,104,55)\",\"50 - 70\":\"rgb(255,255,190)\",\"70 - 100\":\"rgb(165,0,38)\"},\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "19331910-9269-11e7-bdf2-4dbe17d732b3",
+    "_type": "visualization",
+    "_source": {
+      "title": "PiArmy Nodes: CPU Usage Gauges",
+      "visState": "{\"title\":\"PiArmy Nodes: CPU Usage Gauges\",\"type\":\"gauge\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":true,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":0,\"to\":50},{\"from\":50,\"to\":75},{\"from\":75,\"to\":100}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":false,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":true}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"CPU\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"Name.keyword\",\"include\":\"\",\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 50\":\"rgb(0,104,55)\",\"50 - 75\":\"rgb(255,255,190)\",\"75 - 100\":\"rgb(165,0,38)\"},\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"docker_swarm_nodes\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+      }
+    }
+  }
+]
