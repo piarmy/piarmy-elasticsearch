@@ -22,6 +22,19 @@ In this example, we're mounting a host volume for the elasticsearch server: /dat
 
 This /data directory *must* exist on the target host prior to deploying. This will store elasticsearch data on the host, persisting between container instances. Kibana stores it's data in elastic search, so Kibana will also persist: visualizations, dashboards, etc.
 
+## Oracle Java replacement
+# REF: https://www.raspberrypi.org/forums/viewtopic.php?t=101543
+
+## Test
+`docker run -it --rm -p 9200:9200 -p 9300:9300 --name piarmy-elasticsearch-server mattwiater/piarmy-elasticsearch-server /bin/bash`
+
+#=> No java installed
+
+## Add Oracle Java
+`apt-get install oracle-java8-jdk`
+
+## Make sure that /data is has the right permissions:
+`sudo chmod 777 -R /data`
 
 ## Build and run:
 ```
@@ -37,17 +50,8 @@ cd /home/pi/images/piarmy-elasticsearch/server && \
   docker push mattwiater/piarmy-elasticsearch-server
 ```
 
-X-Pack (does not work for ARM)
-```
-cd /home/pi/images/piarmy-elasticsearch/server && \
-  docker build -t mattwiater/piarmy-elasticsearch-server-xpack . && \
-  docker push mattwiater/piarmy-elasticsearch-server-xpack
-```
-
-docker run -d --rm --name piarmy-elasticsearch-server-xpack -p 9222:9200 -p 9333:9300 mattwiater/piarmy-elasticsearch-server-xpack
-
-## Service takes awhile t start, check logs with:
-docker exec -it $(docker ps | grep piarmy-elasticsearch-server | awk '{print $1}') tail /var/log/elasticsearch/piarmy.log
+## Service takes awhile to start, check logs with:
+clear && docker exec -it $(docker ps | grep piarmy-elasticsearch-server | awk '{print $1}') tail -f /var/log/elasticsearch/piarmy.log
 
 ## Enter running container
 docker exec -it $(docker ps | grep piarmy-elasticsearch-server | awk '{print $1}') /bin/bash

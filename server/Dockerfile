@@ -1,30 +1,31 @@
-FROM hypriot/rpi-java
+FROM resin/rpi-raspbian:latest
+#FROM hypriot/rpi-java
 
-RUN apt-get update && \
-  apt-get -yq install nano net-tools nmap wget curl
+RUN apt-get update && apt-get -y upgrade && \
+  apt-get -yq install nano net-tools nmap wget curl oracle-java8-jdk && \
+  apt-get -y autoremove && apt-get -y autoclean
+
+#RUN apt-get -yq install software-properties-common && \
+#  add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" && \
+#  apt-get update && \
+#  apt-get install oracle-java8-installer && \
+#  apt-get update && apt-get -y upgrade && \
+#  apt-get autoremove && apt-get autoclean
 
 RUN wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.2.deb && \
-	dpkg -i elasticsearch-5.5.2.deb
+  dpkg -i elasticsearch-5.5.2.deb
 
 COPY start.sh /home/start.sh
 COPY elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 COPY jvm.options /etc/elasticsearch/jvm.options
 
-RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
+#RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
-RUN rm /data/elasticsearch-5.5.2.deb
+#RUN rm /data/elasticsearch-5.5.2.deb
 
 COPY containerFiles /home/testing
 
 WORKDIR /home
-
-# X-Pack Plugin (does not work for ARM)
-# RUN cd /home && \
-#   wget https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.5.2.zip && \
-#   cd /usr/share/elasticsearch && \
-#   bin/elasticsearch-plugin install --batch file:///home/x-pack-5.5.2.zip && \
-#   cd /home && \
-#   rm x-pack-5.5.2.zip
 
 EXPOSE 9200 9300
 
