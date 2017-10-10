@@ -75,7 +75,7 @@ bin/elasticsearch-plugin install file:///home/x-pack-5.5.2.zip
 
 # {"Date":"1504616017384", "Id":"piarmy03","Name":"piarmy03","Ip":"192.168.1.112","CPU":"18.2","Temp":"115.16","RAM":{"total": "923","used": "313","free": "601"},"HDD":{"total": "30","used": "26","free": "26"}}
 
-curl -XPUT 'elasticsearch:9200/docker_swarm_nodes' -H 'Content-Type: application/json' -d'
+curl -XPUT 'piarmy04:9200/docker_swarm_nodes' -H 'Content-Type: application/json' -d'
 {
  "mappings": {
    "collision": {
