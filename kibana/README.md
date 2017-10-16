@@ -19,13 +19,5 @@ cd /home/pi/images/piarmy-elasticsearch/kibana && \
   docker push mattwiater/piarmy-elasticsearch-kibana
 ```
 
-X-Pack  (does not work for ARM)
-```
-cd /home/pi/images/piarmy-elasticsearch/kibana && \
-  docker build -t mattwiater/piarmy-elasticsearch-kibana-xpack . && \
-  docker push mattwiater/piarmy-elasticsearch-kibana-xpack
-```
-
 ## Enter running container
 docker exec -it $(docker ps | grep piarmy-elasticsearch-kibana | awk '{print $1}') /bin/bash
-
