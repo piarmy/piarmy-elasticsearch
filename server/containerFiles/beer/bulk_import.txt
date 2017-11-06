@@ -1,0 +1,37 @@
+api.portlandbeer.org
+
+# Elasticsearch
+# REF: https://stackoverflow.com/questions/45601344/elasticsearch-bulk-json-data
+sudo apt install jq
+
+# convert json data
+jq -c -r ".[]" beer.json | while read line; do echo '{"index":{}}'; echo $line; done > beer.bulk.json && \
+  jq -c -r ".[]" breweries.json | while read line; do echo '{"index":{}}'; echo $line; done > breweries.bulk.json
+
+# Create beers index
+curl -XPUT 'piarmy04.corp.roundhouseagency.com:9200/beers?pretty' -H 'Content-Type: application/json' -d'
+{}
+'
+
+# Create breweries index
+curl -XPUT 'piarmy04.corp.roundhouseagency.com:9200/breweries?pretty' -H 'Content-Type: application/json' -d'
+{
+ "template": "breweries",
+ "mappings": {
+   "brewery": {
+     "properties": {
+       "coords": {
+         "type": "geo_point"
+       }
+     }
+   }
+ }
+}
+'
+
+
+# Bulk import beer
+curl -XPOST piarmy04.corp.roundhouseagency.com:9200/beers/beer/_bulk -H "Content-Type: application/x-ndjson" --data-binary @beer.bulk.json
+
+# Bulk import breweries
+curl -XPOST piarmy04.corp.roundhouseagency.com:9200/breweries/brewery/_bulk -H "Content-Type: application/x-ndjson" --data-binary @breweries.bulk.json
